@@ -5,6 +5,7 @@ Pokemon.reset_pk_sequence
 
 $parsedArr = []
 $post_pics = []
+$jokeArr = []
 
 def fetchAPI(url)
     raw = RestClient.get(url)
@@ -16,6 +17,17 @@ end
 def addToPostPics(arr)
     arr.each do |card|
         $post_pics << card["imageUrlHiRes"]
+    end
+end
+
+def addJoke(num)
+    i = 0
+    until i == num do 
+        joke = RestClient.get('https://api.chucknorris.io/jokes/random')
+        parsedJoke = JSON.parse(joke)
+        randomJoke = parsedJoke["value"]
+        $jokeArr << randomJoke
+        i += 1
     end
 end
 
@@ -46,8 +58,12 @@ pokemonArr.each do  |pokemon|
         string = id.to_s
     end
     Pokemon.create(species: name, dataId: string, image: image)
-    
 end
+
+addJoke(1500)
+
+    
+
 
 # detectivePikachuSet = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=det1')
 # parsedDPS = JSON.parse(detectivePikachuSet)
@@ -143,9 +159,6 @@ end
 # parsedLT = JSON.parse(legendaryTreasures)
 # LT_arr = parsedLT["cards"]
 # parsedArr << LT_arr
-
-
-
 
 # addToPostPics(DPS_arr)
 # addToPostPics(SV_arr)
