@@ -3,6 +3,15 @@ require 'JSON'
 Pokemon.destroy_all
 Pokemon.reset_pk_sequence
 
+Follow.destroy_all
+Follow.reset_pk_sequence
+
+Post.destroy_all
+Post.reset_pk_sequence
+
+Like.destroy_all
+Like.reset_pk_sequence
+
 $parsedArr = []
 $post_pics = []
 $jokeArr = []
