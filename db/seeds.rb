@@ -81,7 +81,7 @@ allPokemon.each do |pokemon|
     posts_num = (SecureRandom.random_number(10) + 1).floor
 
     (1..posts_num).each do |post|
-        Post.create(image: $post_pics[(SecureRandom.random_number(1500) + 1).floor], caption: $jokeArr[(SecureRandom.random_number(1500) + 1).floor], pokemon_id: pokemon.id)
+        Post.create(image: $post_pics[(SecureRandom.random_number(1800) + 1).floor], caption: $jokeArr[(SecureRandom.random_number(1500) + 1).floor], pokemon_id: pokemon.id)
     end
         
 end
