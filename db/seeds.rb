@@ -4,23 +4,20 @@ require 'securerandom'
 Pokemon.destroy_all
 Pokemon.reset_pk_sequence
 
-Follow.destroy_all
+# Follow.destroy_all
 Follow.reset_pk_sequence
 
-Post.destroy_all
+# Post.destroy_all
 Post.reset_pk_sequence
 
-Like.destroy_all
+# Like.destroy_all
 Like.reset_pk_sequence
 
 $parsedArr = []
 $post_pics = []
 $jokeArr = []
 
-# Code for random numbers ---------------------------------------------------------------
-# ----------------------------------------------------------------------------------------
-# (SecureRandom.random_number(10) + 1).floor
-# (SecureRandom.random_number(1500) + 1).floor
+allPokemon = Pokemon.all
 
 # Function Definitions-------------------------------------------------------------------
 def fetchAPI(url)
@@ -79,119 +76,22 @@ pokemonArr.each do  |pokemon|
     Pokemon.create(species: name, dataId: string, image: image)
 end
 
-# Below is the initial written code for above that I will be deleting since I've already refactored
+# Creating Posts for Each Pokemon--------------------------------------------------
+allPokemon.each do |pokemon|
+    posts_num = (SecureRandom.random_number(10) + 1).floor
 
-# detectivePikachuSet = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=det1')
-# parsedDPS = JSON.parse(detectivePikachuSet)
-# DPS_arr = parsedDPS["cards"]
-# parsedArr << DPS_arr
+    (1..posts_num).each do |post|
+        Post.create(image: $post_pics[(SecureRandom.random_number(1500) + 1).floor], caption: $jokeArr[(SecureRandom.random_number(1500) + 1).floor], pokemon_id: pokemon.id)
+    end
+        
+end
 
-# shinyVault = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sma')
-# parsedShinyVault = JSON.parse(shinyVault)
-# SV_arr = parsedDPS["cards"]
-# parsedArr << SV_arr
+# Creating Follow Relationships---------------------------------------------------
+151.times do |y|
+    15.times do |t|
+        num = rand(152)
+        Follow.create(pokemon_id: y, following_id: num)
+    end 
+end 
 
-# forbiddenLight = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm6')
-# parsedForbiddenLight = JSON.parse(forbiddenLight)
-# FL_arr = parsedForbiddenLight["cards"]
-# parsedArr << FL_arr
-
-# shiningLegends = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm35')
-# parsedShiningLegends = JSON.parse(shiningLegends)
-# SL_arr = parsedForbiddenLight["cards"]
-# parsedArr << SL_arr
-
-# plasmaBlast = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=bw10')
-# parsedPB = JSON.parse(plasmaBlast)
-# PB_arr = parsedPB["cards"]
-# parsedArr << PB_arr
-
-# unifiedMinds = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm11')
-# parsedUM = JSON.parse(unifiedMinds)
-# UM_arr = parsedUM["cards"]
-# parsedArr << UM_arr
-
-# unbrokenBonds = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm10')
-# parsedUB = JSON.parse(unbrokenBonds)
-# UB_arr = parsedUB["cards"]
-# parsedArr << UB_arr
-
-# dragonMajesty = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm75')
-# parsedDM = JSON.parse(dragonMajesty)
-# DM_arr = parsedDM["cards"]
-# parsedArr << DM_arr
-
-# celestialStorm = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm7')
-# parsedCS = JSON.parse(celestialStorm)
-# CS_arr = parsedCS["cards"]
-# parsedArr << CS_arr
-
-# ultraPrism = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm5')
-# parsedUP = JSON.parse(ultraPrism)
-# UP_arr = parsedUP["cards"]
-# parsedArr << UP_arr
-
-# crimsonInvasion = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm4')
-# parsedCI = JSON.parse(crimsonInvasion)
-# CI_arr = parsedCI["cards"]
-# parsedArr << CI_arr
-
-# burningShadows = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm3')
-# parsedBS = JSON.parse(burningShadows)
-# BS_arr = parsedBS["cards"]
-# parsedArr << BS_arr
-
-# sunNmoon = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=sm1')
-# parsedSM = JSON.parse(sunNmoon)
-# SM_arr = parsedSM["cards"]
-# parsedArr << SM_arr
-
-# generations = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=g1')
-# parsedG = JSON.parse(generations)
-# G_arr = parsedG["cards"]
-# parsedArr << G_arr
-
-# ancientOrigins = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=xy7')
-# parsedAO = JSON.parse(ancientOrigins)
-# AO_arr = parsedAO["cards"]
-# parsedArr << AO_arr
-
-# roaringSkies = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=xy6')
-# parsedRS = JSON.parse(roaringSkies)
-# RS_arr = parsedRS["cards"]
-# parsedArr << RS_arr
-
-# breakPoint = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=xy9')
-# parsedBP = JSON.parse(breakPoint)
-# BP_arr = parsedBP["cards"]
-# parsedArr << BP_arr
-
-# primalClash = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=xy5')
-# parsedPC = JSON.parse(primalClash)
-# PC_arr = parsedPC["cards"]
-# parsedArr << PC_arr
-
-# legendaryTreasures = RestClient.get('https://api.pokemontcg.io/v1/cards?setCode=bw11')
-# parsedLT = JSON.parse(legendaryTreasures)
-# LT_arr = parsedLT["cards"]
-# parsedArr << LT_arr
-
-# addToPostPics(DPS_arr)
-# addToPostPics(SV_arr)
-# addToPostPics(FL_arr)
-# addToPostPics(SL_arr)
-# addToPostPics(PB_arr)
-# addToPostPics(UM_arr)
-# addToPostPics(UB_arr)
-# addToPostPics(DM_arr)
-# addToPostPics(CS_arr)
-# addToPostPics(UP_arr)
-# addToPostPics(CI_arr)
-# addToPostPics(BS_arr)
-# addToPostPics(SM_arr)
-# addToPostPics(G_arr)
-# addToPostPics(AO_arr)
-# addToPostPics(RS_arr)
-# addToPostPics(BP_arr)
-# addToPostPics(PC_arr)
-# addToPostPics(LT_arr)
+puts "It has been seeded!!! 🍀"
