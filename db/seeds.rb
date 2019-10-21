@@ -1,4 +1,5 @@
 require 'JSON'
+require 'securerandom'
 
 Pokemon.destroy_all
 Pokemon.reset_pk_sequence
@@ -15,6 +16,11 @@ Like.reset_pk_sequence
 $parsedArr = []
 $post_pics = []
 $jokeArr = []
+
+# Code for random numbers ---------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
+# (SecureRandom.random_number(10) + 1).floor
+# (SecureRandom.random_number(1500) + 1).floor
 
 # Function Definitions-------------------------------------------------------------------
 def fetchAPI(url)
