@@ -1,5 +1,6 @@
 class Pokemon < ApplicationRecord
-
+    has_many :posts 
+    has_many :likes
     has_many :follows 
 
     has_many :follower_relationships, foreign_key: :following_id, class_name: "Follow"
