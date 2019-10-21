@@ -1,7 +1,8 @@
 class PokemonsController < ApplicationController
     def index
-        pokemons = Pokemon.all
-        render json: pokemons
+        pokemonIndexFile = File.read('pokemon.json')
+        pokemonIndex = JSON.parse(pokemonIndexFile)
+        render json: pokemonIndex
     end
 
     def show
