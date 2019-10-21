@@ -1,4 +1,3 @@
-class LikeSerializer
-  include FastJsonapi::ObjectSerializer
-  attributes 
+class LikeSerializer < ActiveModel::Serializer
+  attributes :pokemon_id, :post_id
 end

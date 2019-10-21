@@ -1,4 +1,3 @@
-class FollowSerializer
-  include FastJsonapi::ObjectSerializer
-  attributes 
+class FollowSerializer < ActiveModel::Serializer
+  attributes :pokemon_id, :following_id, :posts
 end

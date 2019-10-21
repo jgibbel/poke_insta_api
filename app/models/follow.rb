@@ -4,4 +4,7 @@ class Follow < ApplicationRecord
     validates :following_id, uniqueness: {scope: :pokemon_id, message: "can only be followed once by this Pokemon"}
     validates :following_id, exclusion: { in: [:pokemon_id], message: "cannot follow him/herself"}
 
+    def posts
+        Pokemon.find(following_id).posts
+    end
 end
