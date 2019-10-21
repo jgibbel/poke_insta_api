@@ -82,8 +82,7 @@ allPokemon.each do |pokemon|
 
     (1..posts_num).each do |post|
         Post.create(image: $post_pics[(SecureRandom.random_number(1800) + 1).floor], caption: $jokeArr[(SecureRandom.random_number(1500) + 1).floor], pokemon_id: pokemon.id)
-    end
-        
+    end    
 end
 
 # Creating Follow Relationships---------------------------------------------------
