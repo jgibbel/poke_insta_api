@@ -1,16 +1,16 @@
 require 'JSON'
 
-Pokemon.destroy_all
-Pokemon.reset_pk_sequence
+# Pokemon.destroy_all
+# Pokemon.reset_pk_sequence
 
-Follow.destroy_all
-Follow.reset_pk_sequence
+# Follow.destroy_all
+# Follow.reset_pk_sequence
 
-Post.destroy_all
-Post.reset_pk_sequence
+# Post.destroy_all
+# Post.reset_pk_sequence
 
-Like.destroy_all
-Like.reset_pk_sequence
+# Like.destroy_all
+# Like.reset_pk_sequence
 
 $parsedArr = []
 $post_pics = []
@@ -47,31 +47,32 @@ pokemonArr = [[1,"Bulbasaur","https://raw.githubusercontent.com/fanzeyi/pokemon.
 URLs = ['https://api.pokemontcg.io/v1/cards?setCode=det1', 'https://api.pokemontcg.io/v1/cards?setCode=sma', 'https://api.pokemontcg.io/v1/cards?setCode=sm6', 'https://api.pokemontcg.io/v1/cards?setCode=sm35', 'https://api.pokemontcg.io/v1/cards?setCode=bw10', 'https://api.pokemontcg.io/v1/cards?setCode=sm11', 'https://api.pokemontcg.io/v1/cards?setCode=sm10', 'https://api.pokemontcg.io/v1/cards?setCode=sm75', 'https://api.pokemontcg.io/v1/cards?setCode=sm7', 'https://api.pokemontcg.io/v1/cards?setCode=sm5', 'https://api.pokemontcg.io/v1/cards?setCode=sm4', 'https://api.pokemontcg.io/v1/cards?setCode=sm3', 'https://api.pokemontcg.io/v1/cards?setCode=sm1', 'https://api.pokemontcg.io/v1/cards?setCode=g1', 'https://api.pokemontcg.io/v1/cards?setCode=xy7', 'https://api.pokemontcg.io/v1/cards?setCode=xy6', 'https://api.pokemontcg.io/v1/cards?setCode=xy9', 'https://api.pokemontcg.io/v1/cards?setCode=xy5', 'https://api.pokemontcg.io/v1/cards?setCode=xy5', 'https://api.pokemontcg.io/v1/cards?setCode=bw11']
 
 # Creating arrays of images and Jokes--------------------------------------------------------
-URLs.each do |url|
-    fetchAPI(url)
-end
+# URLs.each do |url|
+#     fetchAPI(url)
+# end
 
-$parsedArr.each do |arr|
-    addToPostPics(arr)
-end
+# $parsedArr.each do |arr|
+#     addToPostPics(arr)
+# end
 
-addJoke(1500)
+# addJoke(1500)
 
 # Creating Pokemon instances-------------------------------------------------------------------
-pokemonArr.each do  |pokemon|
-    id = pokemon[0]
-    name = pokemon[1]
-    image = pokemon[2]
-    string = ""
-    if id.to_s.length == 1 
-        string = "00" + id.to_s 
-    elsif id.to_s.length == 2 
-        string = "0" + id.to_s
-    else 
-        string = id.to_s
-    end
-    Pokemon.create(species: name, dataId: string, image: image)
-end
+
+# pokemonArr.each do  |pokemon|
+#     id = pokemon[0]
+#     name = pokemon[1]
+#     image = pokemon[2]
+#     string = ""
+#     if id.to_s.length == 1 
+#         string = "00" + id.to_s 
+#     elsif id.to_s.length == 2 
+#         string = "0" + id.to_s
+#     else 
+#         string = id.to_s
+#     end
+#     Pokemon.create(species: name, dataId: string, image: image)
+# end
 
 # Below is the initial written code for above that I will be deleting since I've already refactored
 
@@ -189,3 +190,38 @@ end
 # addToPostPics(BP_arr)
 # addToPostPics(PC_arr)
 # addToPostPics(LT_arr)
+
+# Parsing JSON files to generate Posts
+#--------------------------------------------------------------------------------------------------
+
+imgFile = File.read('pokeImages.json')
+captionFile = File.read('pokeCaptions.json')
+imgArr = JSON.parse(imgFile)
+capArr = JSON.parse(captionFile)
+
+z = 0
+capArr.each do |caption|
+    image = imgArr[z]
+    pokemon_id = rand(152)
+    Post.create(image: image, caption: caption, pokemon_id: pokemon_id)
+    z +=1
+end
+
+# Generate follows -----------------------------------
+
+
+151.times do |y|
+    15.times do |t|
+        num1 = rand(152)
+        Follow.create(pokemon_id: y, following_id: num1)
+    end 
+end 
+
+# Generate likes --------------------------------------
+
+800.times do |x|
+    pokeId = rand(152)
+    post = rand(1501) 
+    # because I made one post per cpation and there were 1500 captions
+    Like.create(pokemon_id: pokeId, post_id: post)
+end 
