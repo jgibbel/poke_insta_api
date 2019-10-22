@@ -5,10 +5,17 @@ class Follow < ApplicationRecord
     validates :following_id, exclusion: { in: [:pokemon_id], message: "cannot follow him/herself"}
 
     def posts
-        Pokemon.find(following_id).posts
+        following.posts.map do |post|
+            PostSerializer.new(post).to_h
+            # post.attributes.merge({likes_count: post.likes.size})
+        end
     end
 
-    def following_name
+    def species
         Pokemon.find(following_id).species
+    end
+
+    def image
+        Pokemon.find(following_id).image
     end
 end
