@@ -11,4 +11,8 @@ class Follow < ApplicationRecord
     def following_name
         Pokemon.find(following_id).species
     end
+
+    def image 
+        Pokemon.find(following_id).image
+    end
 end
