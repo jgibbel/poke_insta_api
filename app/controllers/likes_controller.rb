@@ -27,6 +27,6 @@ class LikesController < ApplicationController
     private
 
     def like_params
-        params.permit(:image, :caption, :pokemon_id)
+        params.permit(:post_id, :pokemon_id)
     end
 end
