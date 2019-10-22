@@ -7,4 +7,8 @@ class Follow < ApplicationRecord
     def posts
         Pokemon.find(following_id).posts
     end
+
+    def following_name
+        Pokemon.find(following_id).species
+    end
 end
