@@ -11,5 +11,11 @@ class Pokemon < ApplicationRecord
     has_many :posts, dependent: :destroy
     has_many :likes, dependent: :destroy
 
+    def sorted_follows
+        return self.follows.sort_by{|follow| follow.following_id}
+            .map do |f| 
+                FollowSerializer.new(f).to_h
+            end         
+    end
 
 end
